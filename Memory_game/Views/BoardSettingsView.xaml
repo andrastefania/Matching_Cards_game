@@ -1,0 +1,65 @@
+﻿<Window x:Class="Memory_game.Views.BoardSettingsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Board Settings"
+        Height="300" Width="350"
+        WindowStartupLocation="CenterScreen"
+        Background="#FFFFC1E3">
+    <Window.Resources>
+        <!-- Kawaii Button Style already applied globally in Application.xaml -->
+    </Window.Resources>
+
+    <StackPanel Margin="20" HorizontalAlignment="Center">
+
+        <!-- Title -->
+        <TextBlock Text="🌸 Board Size &amp; Time 🌸" 
+                   FontSize="20" 
+                   FontWeight="Bold" 
+                   Foreground="#6A0DAD" 
+                   FontFamily="Georgia" 
+                   Margin="0,0,0,15" 
+                   HorizontalAlignment="Center" />
+
+        <!-- Board size selector -->
+        <TextBlock Text="Choose Board Size:" 
+                   Foreground="#6A0DAD" 
+                   FontFamily="Georgia" 
+                   Margin="0,5" />
+        <ComboBox ItemsSource="{Binding BoardSizes}" 
+                  SelectedItem="{Binding SelectedBoardSize}" 
+                  Width="200" 
+                  Margin="0,5"
+                  FontFamily="Georgia" 
+                  Background="#FFFFC1E3"
+                  BorderBrush="#DDA0DD" 
+                  BorderThickness="2" 
+                  Foreground="#6A0DAD"/>
+
+        <!-- Time input -->
+        <TextBlock Text="Set Time Limit (seconds):" 
+                   Foreground="#6A0DAD" 
+                   FontFamily="Georgia" 
+                   Margin="10,10,0,0" />
+        <TextBox Text="{Binding TimeLimit}" 
+                 Width="80" 
+                 FontSize="14" 
+                 FontFamily="Georgia" 
+                 Margin="0,5"
+                 Background="#DDA0DD"
+                 Foreground="#6A0DAD"
+                 BorderBrush="#6A0DAD" 
+                 BorderThickness="2" />
+
+        <!-- Buttons -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
+            <Button Content="Save" 
+                    Command="{Binding SaveCommand}" 
+                    Style="{StaticResource KawaiiButtonStyle}" 
+                    Width="80" />
+            <Button Content="Cancel" 
+                    Command="{Binding CancelCommand}" 
+                    Style="{StaticResource KawaiiButtonStyle}" 
+                    Width="80" />
+        </StackPanel>
+    </StackPanel>
+</Window>

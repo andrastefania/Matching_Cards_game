@@ -1,0 +1,49 @@
+﻿<Window x:Class="Memory_game.Views.CreateUserView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:converters="clr-namespace:Memory_game.Converters"
+        Title="Create New Adventurer"
+        Height="350" Width="300"
+        WindowStartupLocation="CenterScreen"
+        Background="#FFFFC1E3">
+
+    <Window.Resources>
+        <converters:ImagePathToImageSourceConverter x:Key="ImageConverter"/>
+        <!-- Remove previous button styles, apply Kawaii globally -->
+    </Window.Resources>
+
+    <StackPanel Margin="20" HorizontalAlignment="Center">
+        <TextBlock Text="Create Your Character" 
+                   FontSize="20" FontWeight="Bold"
+                   Foreground="#6A0DAD" Margin="0,0,0,10"
+                   HorizontalAlignment="Center"
+                   FontFamily="Georgia"/>
+        <TextBox Text="{Binding Username}"
+                 Width="200"
+                 Height="30"
+                 FontSize="14"
+                 FontFamily="Georgia"
+                 Margin="0,5"
+                 Background="#DDA0DD"
+                 Foreground="#6A0DAD"
+                 BorderBrush="#6A0DAD"
+                 BorderThickness="2"/>
+
+        <Image Source="{Binding SelectedAvatar, Converter={StaticResource ImageConverter}}" 
+               Width="100" Height="100"
+               Margin="10"
+               HorizontalAlignment="Center"
+               Stretch="UniformToFill"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="🡐" Command="{Binding PreviousCommand}" Style="{StaticResource KawaiiButtonStyle}" Width="50"/>
+            <Button Content="🡒" Command="{Binding NextCommand}" Style="{StaticResource KawaiiButtonStyle}" Width="50"/>
+        </StackPanel>
+
+        <Button Content="🌸 Create 🌸 " 
+                Click="CreateButton_Click"
+                Width="180" Height="40"
+                HorizontalAlignment="Center"
+                Style="{StaticResource KawaiiButtonStyle}"/>
+    </StackPanel>
+</Window>
