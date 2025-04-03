@@ -19,8 +19,8 @@ namespace Memory_game.ViewModels
         public string SelectedBoardSize { get; set; } = "4x4";
         public List<string> BoardSizes { get; } = new List<string>
         {
-            "2x2",
             "2x4",
+            "3x4",
             "4x4"
         };
 
@@ -57,6 +57,7 @@ namespace Memory_game.ViewModels
             {
                 MessageBox.Show("Invalid board size or time.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+
         }
 
 

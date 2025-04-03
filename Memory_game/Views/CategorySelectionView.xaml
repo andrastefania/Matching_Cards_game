@@ -2,12 +2,11 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:converters="clr-namespace:Memory_game.Converters"
-        Title="Choose Category" Height="550" Width="720"
+        Title="Category" Height="650" Width="600"
         Background="#FFFFC1E3" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <converters:ImagePathToImageSourceConverter x:Key="ImageConverter"/>
-        <!-- Remove previous button styles, apply Kawaii globally -->
     </Window.Resources>
 
     <DockPanel Margin="20">
@@ -19,37 +18,25 @@
 
         <UniformGrid Rows="1" Columns="3" HorizontalAlignment="Center">
 
-            <!-- Viking Category -->
+            <!-- Cute Animals Category -->
             <StackPanel HorizontalAlignment="Center">
-                <Image Source="{Binding CurrentVikingImage, Converter={StaticResource ImageConverter}}"
+                <Image Source="{Binding CurrentAnimalImage, Converter={StaticResource ImageConverter}}"
                        Width="120" Height="120" Stretch="Uniform"/>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Content="⟨" Command="{Binding PrevVikingCommand}" Style="{StaticResource KawaiiButtonStyle}" Width="22" Margin="5"/>
-                    <Button Content="⟩" Command="{Binding NextVikingCommand}" Style="{StaticResource KawaiiButtonStyle}" Width="22" Margin="5"/>
-                </StackPanel>
-                <Button Content="Choose" Command="{Binding ChooseVikingCommand}" Style="{StaticResource KawaiiButtonStyle}"/>
+                <Button Content="Cute Animals" Command="{Binding ChooseCuteAnimalsCommand}" Style="{StaticResource KawaiiButtonStyle}"/>
             </StackPanel>
 
-            <!-- Wizard Category -->
+            <!-- Anime Characters Category -->
             <StackPanel HorizontalAlignment="Center">
-                <Image Source="{Binding CurrentWizardImage, Converter={StaticResource ImageConverter}}"
+                <Image Source="{Binding CurrentAnimeImage, Converter={StaticResource ImageConverter}}"
                        Width="120" Height="120" Stretch="Uniform"/>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Content="⟨" Command="{Binding PrevWizardCommand}" Style="{StaticResource KawaiiButtonStyle}" Width="22" Margin="5"/>
-                    <Button Content="⟩" Command="{Binding NextWizardCommand}" Style="{StaticResource KawaiiButtonStyle}" Width="22" Margin="5"/>
-                </StackPanel>
-                <Button Content="Choose" Command="{Binding ChooseWizardCommand}" Style="{StaticResource KawaiiButtonStyle}"/>
+                <Button Content="Anime Characters" Command="{Binding ChooseAnimeCommand}" Style="{StaticResource KawaiiButtonStyle}"/>
             </StackPanel>
 
-            <!-- Farmer Category -->
+            <!-- Food Category -->
             <StackPanel HorizontalAlignment="Center">
-                <Image Source="{Binding CurrentFarmerImage, Converter={StaticResource ImageConverter}}"
+                <Image Source="{Binding CurrentFoodImage, Converter={StaticResource ImageConverter}}"
                        Width="120" Height="120" Stretch="Uniform"/>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Content="⟨" Command="{Binding PrevFarmerCommand}" Style="{StaticResource KawaiiButtonStyle}" Width="22" Margin="5"/>
-                    <Button Content="⟩" Command="{Binding NextFarmerCommand}" Style="{StaticResource KawaiiButtonStyle}" Width="22" Margin="5"/>
-                </StackPanel>
-                <Button Content="Choose" Command="{Binding ChooseFarmerCommand}" Style="{StaticResource KawaiiButtonStyle}"/>
+                <Button Content="Tasty Food" Command="{Binding ChooseFoodCommand}" Style="{StaticResource KawaiiButtonStyle}"/>
             </StackPanel>
 
         </UniformGrid>

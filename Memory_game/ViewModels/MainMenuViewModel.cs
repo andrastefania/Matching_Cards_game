@@ -43,9 +43,6 @@ namespace Memory_game.ViewModels
             AboutCommand = new RelayCommand(ShowAbout);
 
             StandardBoardCommand = new RelayCommand(() => SetBoardSize(4, 4));
-            //CustomBoardCommand = new RelayCommand(OpenCustomSizeDialog);
-            //OpenSavedGameCommand = new RelayCommand(OpenSavedGame, CanLoadSavedGame);
-            //SelectCategoryCommand = new RelayCommand(OpenCategorySelection);
             OpenSavedGameCommand = new RelayCommand(OpenSavedGame, CanLoadSavedGame);
 
 
@@ -55,20 +52,26 @@ namespace Memory_game.ViewModels
                 {
                     DataContext = new BoardSettingsViewModel()
                 };
-                window.ShowDialog(); // or Show() if you prefer
+                window.ShowDialog();
             });
 
             AboutCommand = new RelayCommand(ShowAbout);
             CommandManager.InvalidateRequerySuggested();
         }
 
-        private void StartNewGame() { /* navigate to GameView */ }
+        private void StartNewGame()
+        {
+            Application.Current.Windows
+                .OfType<Window>()
+                .FirstOrDefault(w => w is LoginView)
+                ?.Close();
+        }
         
         private void OpenGame()
         {
             var gameView = new GameView
             {
-                DataContext = new GameViewModel(_currentUser) // Pass the user if needed
+                DataContext = new GameViewModel(_currentUser) 
             };
             gameView.Show();
 
@@ -89,14 +92,14 @@ namespace Memory_game.ViewModels
             .OfType<Window>()
             .FirstOrDefault(w => w is GameView)
             ?.Close();
+            CloseMenu();
         }
 
 
 
 
-        private void SaveGame() { /* save current game */ }
-        //private void OpenStats() { /* show statistics */ }
-        private void SetBoardSize(int rows, int cols) { /* save board config */ }
+        private void SaveGame() {}
+        private void SetBoardSize(int rows, int cols) {  }
 
         private void ShowAbout()
         {
@@ -128,24 +131,11 @@ namespace Memory_game.ViewModels
                 gameView.Show();
                 CloseMenu();
             }
+            Application.Current.Windows
+                .OfType<Window>()
+                .FirstOrDefault(w => w is LoginView)
+                ?.Close();
         }
-
-        //private void OpenSavedGame()
-        //{
-        //    var gameService = new GameService();
-        //    var state = gameService.LoadGame(_currentUser.Username);
-
-        //    if (state != null)
-        //    {
-        //        var gameView = new GameView
-        //        {
-        //            DataContext = new GameViewModel(_currentUser, state)
-        //        };
-        //        gameView.Show();
-        //        CloseMenu();
-        //    }
-        //}
-
         private void OpenSavedGame()
         {
             var gameService = new GameService();
@@ -164,7 +154,11 @@ namespace Memory_game.ViewModels
             {
                 MessageBox.Show("No saved game found.");
             }
-            
+            Application.Current.Windows
+                .OfType<Window>()
+                .FirstOrDefault(w => w is LoginView)
+                ?.Close();
+
         }
 
 
@@ -180,7 +174,12 @@ namespace Memory_game.ViewModels
             {
                 DataContext = new StatisticsViewModel(_currentUser)
             };
-            statsWindow.ShowDialog(); 
+            statsWindow.ShowDialog();
+            Application.Current.Windows
+               .OfType<Window>()
+               .FirstOrDefault(w => w is LoginView)
+               ?.Close();
+            CloseMenu() ;
         }
 
         private void ReturnToLogin()

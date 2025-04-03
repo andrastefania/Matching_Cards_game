@@ -14,7 +14,6 @@ namespace Memory_game.Converters
             if (string.IsNullOrEmpty(relativePath)) return null;
 
             string fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
-            Console.WriteLine("Full Path: " + fullPath);
             if (!File.Exists(fullPath)) return null;
 
             return new BitmapImage(new Uri(fullPath, UriKind.Absolute));

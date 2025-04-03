@@ -30,6 +30,7 @@ namespace Memory_game.ViewModels
 
         private DispatcherTimer _timer;
         private TimeSpan _timeRemaining;
+        private bool incremented = false;
 
         public string TimeDisplay => _timeRemaining.ToString(@"mm\:ss");
 
@@ -151,52 +152,6 @@ namespace Memory_game.ViewModels
 
 
         #region Methods
-        //private async void FlipCard(Card card)
-        //{
-        //    if (_isBusyFlipping || card.IsFlipped || card.IsMatched)
-        //        return;
-
-        //    card.IsFlipped = true;
-
-        //    if (_firstFlippedCard == null)
-        //    {
-        //        _firstFlippedCard = card;
-        //        return;
-        //    }
-
-        //    _isBusyFlipping = true;
-
-        //    if (_firstFlippedCard.ImagePath == card.ImagePath)
-        //    {
-        //        await Task.Delay(500);
-        //        _firstFlippedCard.IsMatched = true;
-        //        card.IsMatched = true;
-        //    }
-        //    else
-        //    {
-        //        await Task.Delay(500);
-        //        _firstFlippedCard.IsFlipped = false;
-        //        card.IsFlipped = false;
-        //    }
-
-        //    _firstFlippedCard = null;
-        //    _isBusyFlipping = false;
-
-        //    if (Cards.All(c => c.IsMatched))
-        //    {
-        //        _timer.Stop();
-        //        _stopwatch.Stop();
-        //        IsTimeUp = false;
-        //        IsGameOver = true;
-
-        //        _currentUser.GamesPlayed++;
-        //        _currentUser.GamesWon++;
-        //        SaveUserStats();
-        //    }
-
-
-        //}
-
         private async void FlipCard(Card card)
         {
             if (_isBusyFlipping || card.IsFlipped || card.IsMatched)
@@ -228,18 +183,18 @@ namespace Memory_game.ViewModels
             _firstFlippedCard = null;
             _isBusyFlipping = false;
 
-            if (Cards.All(c => c.IsMatched))  // Game ends if all cards are matched
+            if (Cards.All(c => c.IsMatched) && incremented==false)  // Game ends if all cards are matched
             {
                 _timer.Stop();
                 _stopwatch.Stop();
                 IsTimeUp = false;
                 IsGameOver = true;
-
-                // Only increment GamesPlayed once after game completion
                 _currentUser.GamesPlayed++;
-                _currentUser.GamesWon++;  // Increment GamesWon when all cards are matched
+                _currentUser.GamesWon++;
+               incremented = true;
                 SaveUserStats();
             }
+
         }
 
 
@@ -269,46 +224,12 @@ namespace Memory_game.ViewModels
             _timer.Tick += TimerTick;
             _timer.Start();
         }
-
-        //private void TimerTick(object sender, EventArgs e)
-        //{
-        //    var elapsed = _stopwatch.Elapsed.TotalSeconds;
-        //    var remaining = _totalTimeInSeconds - elapsed;
-
-        //    if (remaining <= 0)
-        //    {
-        //        _timer.Stop();
-        //        _stopwatch.Stop();
-        //        _timeRemaining = TimeSpan.Zero;
-        //        OnPropertyChanged(nameof(TimeDisplay));
-
-        //        IsTimeUp = true;
-        //        IsGameOver = true;
-
-        //        _currentUser.GamesPlayed++;
-        //        SaveUserStats();
-        //        return;
-        //    }
-
-
-        //    _timeRemaining = TimeSpan.FromSeconds(remaining);
-        //    OnPropertyChanged(nameof(TimeDisplay));
-
-        //    if (Cards.All(c => c.IsMatched))
-        //    {
-        //        _timer.Stop();
-        //        _stopwatch.Stop();
-        //        IsTimeUp = false;
-        //        IsGameOver = true;
-        //    }
-        //}
-
         private void TimerTick(object sender, EventArgs e)
         {
             var elapsed = _stopwatch.Elapsed.TotalSeconds;
             var remaining = _totalTimeInSeconds - elapsed;
 
-            if (remaining <= 0)
+            if (remaining <= 0 && incremented==false)
             {
                 _timer.Stop();
                 _stopwatch.Stop();
@@ -317,26 +238,25 @@ namespace Memory_game.ViewModels
 
                 IsTimeUp = true;
                 IsGameOver = true;
-
-                // Only increment GamesPlayed once when the timer runs out
                 _currentUser.GamesPlayed++;
                 SaveUserStats();
+                incremented = true;
                 return;
             }
 
             _timeRemaining = TimeSpan.FromSeconds(remaining);
             OnPropertyChanged(nameof(TimeDisplay));
 
-            if (Cards.All(c => c.IsMatched))  // Game ends if all cards are matched
+            if (Cards.All(c => c.IsMatched) && incremented==false)  // Game ends if all cards are matched
             {
+                
                 _timer.Stop();
                 _stopwatch.Stop();
                 IsTimeUp = false;
                 IsGameOver = true;
-
-                // Increment GamesPlayed and GamesWon once the game is finished
                 _currentUser.GamesPlayed++;
                 _currentUser.GamesWon++;
+                incremented = true;
                 SaveUserStats();
             }
         }
@@ -372,7 +292,7 @@ namespace Memory_game.ViewModels
         private void SaveUserStats()
         {
             var userService = new UserService();
-            userService.UpdateUser(_currentUser);  
+            userService.UpdateUser(_currentUser); 
         }
 
         private void ReturnToMainMenu()

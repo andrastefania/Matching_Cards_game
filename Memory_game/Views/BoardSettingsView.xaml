@@ -2,12 +2,9 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Board Settings"
-        Height="300" Width="350"
+        Height="650" Width="600"
         WindowStartupLocation="CenterScreen"
         Background="#FFFFC1E3">
-    <Window.Resources>
-        <!-- Kawaii Button Style already applied globally in Application.xaml -->
-    </Window.Resources>
 
     <StackPanel Margin="20" HorizontalAlignment="Center">
 
